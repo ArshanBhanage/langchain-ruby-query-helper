@@ -130,6 +130,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+our-forest-445010-h3-2ea6c5a86d07.json
 env/
 venv/
 ENV/
