@@ -11,11 +11,14 @@ load_dotenv()
 
 embeddings = VertexAIEmbeddings(model="text-embedding-005")
 
-loader = TextLoader("docs/active_record_query_v7.0.txt")
-documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-docs = text_splitter.split_documents(documents)
+for root, dirs, files in os.walk("migrations"):
+    for file in files:
+        loader = TextLoader(f"migrations/{file}")
+        documents = loader.load()
+        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        docs = text_splitter.split_documents(documents)
 
-print(documents)
+        # print(documents)
 
-vector_store = PineconeVectorStore.from_documents(documents=docs, index_name = os.getenv("INDEX_NAME"), embedding=embeddings)
+        vector_store = PineconeVectorStore.from_documents(documents=docs, index_name=os.getenv("INDEX_NAME"),
+                                                          embedding=embeddings)
